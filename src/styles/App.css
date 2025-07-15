@@ -1,0 +1,32 @@
+#root {
+    width: 100vw;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: left;
+    color: white;
+    background-color: #040714;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.app-container {
+    width: 100%;
+    min-height: 100vh;
+    animation: fadeSlide 0.5s cubic-bezier(0.25, 0.5, 0.5, 1) both;
+    transition: all 0.5s cubic-bezier(0.25, 0.5, 0.5, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.row-container{
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeSlide 0.5s cubic-bezier(0.25, 0.5, 0.5, 1) both;
+    transition: all 0.5s cubic-bezier(0.25, 0.5, 0.5, 1);
+}
+
+.row-container.blurred {
+    filter: blur(8px);
+    transition: filter 0.5s ease-in-out;
+
+}

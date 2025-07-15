@@ -1,0 +1,101 @@
+.card-row-container {
+    background: #040714;
+    /* background: #17171b; */
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 10px 0 30px;
+    animation: fadeSlide 0.5s cubic-bezier(0.25, 0.5, 0.5, 1) both;
+    transition: all 0.5s cubic-bezier(0.25, 0.5, 0.5, 1);
+}
+
+.section-title {
+    margin: 0px;
+    font-size: 30px;
+    font-weight: 600;
+    color: #f9f9f9;
+    animation: fadeSlide 0.6s cubic-bezier(0.25, 0.5, 0.5, 1) both;
+    transition: all 0.6s cubic-bezier(0.25, 0.5, 0.5, 1);
+}
+
+.cards-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    position: relative;
+    animation: fadeSlide 0.5s cubic-bezier(0.25, 0.5, 0.5, 1) both;
+    transition: all 0.5s cubic-bezier(0.25, 0.5, 0.5, 1);
+}
+
+
+.cards-wrapper {
+    display: flex;
+    gap: 10px;
+    min-width: fit-content;
+    padding-right: 50px;
+    padding: 60px 60px 60px 0px;
+}
+
+.card {
+    flex-shrink: 0;
+    width: 400px;
+    height: 225px;
+    padding: 0px 40px 0px 40px;
+    transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 1);
+    position: relative;
+    transform-origin: center;
+}
+
+.card:focus {
+    outline: none;
+}
+
+.card.selected {
+    transform: scale(1.2);
+    padding: 0px 50px 0px 50px;
+    z-index: 10;
+    
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+    overflow: hidden;
+    position: relative;
+    
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.card-info {
+    padding: 0 1rem;
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.card.selected .card-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-title {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #f9f9f9;
+    line-height: 1.2;
+}
+
+.card * {
+    transition: inherit;
+}
