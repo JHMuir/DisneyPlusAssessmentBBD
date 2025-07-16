@@ -1,4 +1,6 @@
-import type { APIResponse, ContentItem, Series, Movie, Collection, ImageCollection, SimpleTextContent, TextContent, Default, ContentMiscData } from "./types";
+import type { APIResponse, ContentItem, Series, Movie, Collection, ImageCollection, SimpleTextContent, TextContent, Default, ContentMiscData } from "./types.ts";
+
+// Utility functions that allow easier interfacing with our types
 
 export function extractAllContentItems(
     response: APIResponse | null

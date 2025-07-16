@@ -3,6 +3,9 @@ import { ContentFields, type CardOverlayProps, type ContentMiscData } from "../t
 import { getContentText, getContentImageURL, getContentMiscData, getContentVideoArtURL } from "../types/helpers.ts";
 import '../styles/CardOverlay.css'
 
+// React Component that renders an overlay by stitching together two images alongside some select data from a given item
+// If the item contains a video asset, it autoplays and loops the video instead of the top image
+
 export function CardOverlay({item}: CardOverlayProps) {
     const videoRef = useRef<HTMLVideoElement>(null); 
     const [topImageIndex, setTopImage] = useState(0);
@@ -18,6 +21,7 @@ export function CardOverlay({item}: CardOverlayProps) {
         miscData: getContentMiscData(item),
     };
 
+    // Small regex function that returns a Title Case string from a camelCase string
     const camelToTitle = (camelStr: string): string => {
         return camelStr
           .replace(/([A-Z])/g, ' $1')
@@ -25,6 +29,7 @@ export function CardOverlay({item}: CardOverlayProps) {
           .trim();
     };
 
+    // Function to takes in masData and creates a multi-line html element
     const renderMiscData = (miscData: ContentMiscData | undefined) => {
         if(!miscData) return;
 
@@ -35,11 +40,12 @@ export function CardOverlay({item}: CardOverlayProps) {
           });
         return elements;
     };
+
+    // Fallback Image Arrays - in the event that an item doesn't have a certain image, we attempt to render the next image in the array instead 
     const topImagesArray = [
         overlayData.heroTile,
         overlayData.heroCollectionTile,
     ].filter(Boolean);
-
     const bottomImagesArray = [
         overlayData.titleTreatmentLayer,
         overlayData.logoLayer,
@@ -48,18 +54,19 @@ export function CardOverlay({item}: CardOverlayProps) {
     const currentTopImage = topImagesArray[topImageIndex];
     const currentBottomImage = bottomImagesArray[bottomImageIndex];
 
+    // Functions that iterate through the Image Arrays
     const handleTopMissingImg = () => {
         if(topImageIndex < topImagesArray.length - 1) {
             setTopImage(prev => prev + 1);
         }
     };
-
     const handleBottomMissingImg = () => {
         if(bottomImageIndex < bottomImagesArray.length - 1) {
             setBottomImage(prev => prev + 1);
         }
     };
     
+    // Small React hook that handles video rendering logic
     useEffect(() => {
         if(overlayData.video && videoRef.current) {
             const video = videoRef.current;

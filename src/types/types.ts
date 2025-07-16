@@ -1,3 +1,6 @@
+
+// Fully typed every property in the API
+
 export interface Default {
     content: string;
     language: string;
@@ -194,6 +197,8 @@ interface CollectionContentItem {
     type: "StandardCollection";
     videoArt: VideoArtItem[];
 }
+
+// ContentItem Types
 export type Series = SeriesContentItem;
 export type Movie = MovieContentItem;
 export type Collection = CollectionContentItem;

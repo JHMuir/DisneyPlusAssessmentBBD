@@ -5,6 +5,7 @@ import '../styles/Card.css'
 
 const PLACEHOLDER_IMAGE = "/disney-plus-placeholder.png";
 
+// React Component that handles the rendering of a given row 
 
 export function CardRow({title, items, loading, error, selectedIndex}:CardRowProps) {
     const containerRef = useRef<HTMLDivElement>(null);

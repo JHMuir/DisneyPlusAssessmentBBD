@@ -3,6 +3,8 @@ import { extractAllContentItems, isSeriesContent, isMovieContent, getContentText
 import '../styles/Test.css'
 import { ContentFields } from '../types/types.ts';
 
+// React Component that allowed me to test functions and explore the API. Not being 
+
 export function renderImageURLs(
   imageData: Record<string, Record<string, string>> | undefined
 ) {
