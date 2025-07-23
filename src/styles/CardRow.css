@@ -53,6 +53,7 @@
     transform: scale(1.2);
     padding: 0px 50px 0px 50px;
     z-index: 10;
+    /* border: 10px solid white; */
     
 }
 
@@ -68,6 +69,11 @@
     overflow: hidden;
     position: relative;
     
+}
+
+.card-image.selected {
+    border: 2px solid #040714;
+    outline: 2px solid white;
 }
 
 .card-image img {

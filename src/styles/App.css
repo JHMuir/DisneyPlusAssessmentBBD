@@ -10,7 +10,6 @@
 }
 
 .app-container {
-    width: 100%;
     min-height: 100vh;
     animation: fadeSlide 0.5s cubic-bezier(0.25, 0.5, 0.5, 1) both;
     transition: all 0.5s cubic-bezier(0.25, 0.5, 0.5, 1);

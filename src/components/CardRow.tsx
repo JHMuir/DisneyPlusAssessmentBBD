@@ -57,7 +57,7 @@ export function CardRow({title, items, loading, error, selectedIndex}:CardRowPro
             <div className="cards-wrapper">
               {cards.map((card, index) => (
                 <div key={card.id} ref={el => { cardRefs.current[index] = el;} } className={`card ${selectedIndex === index ? 'selected' : ''}`} tabIndex={-1}>
-                  <div className="card-image">
+                  <div className={`card-image ${selectedIndex === index ? 'selected' : ''}`}>
                     <div>
                       <img src={card.tile} alt={card.title} onError={handleImgError}></img>
                     </div>
