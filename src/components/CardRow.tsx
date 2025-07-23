@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { getContentText, getContentImageURL, getContentIDs } from '../types/helpers.ts';
 import { type CardRowProps, ContentFields } from '../types/types.ts';
-import '../styles/Card.css'
+import '../styles/CardRow.css'
 
 const PLACEHOLDER_IMAGE = "/disney-plus-placeholder.png";
 

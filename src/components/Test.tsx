@@ -1,9 +1,8 @@
 import { getData } from '../api/api.ts'
 import { extractAllContentItems, isSeriesContent, isMovieContent, getContentText, isCollectionContent, getAllContentImageURL } from '../types/helpers.ts';
-import '../styles/Test.css'
 import { ContentFields } from '../types/types.ts';
 
-// React Component that allowed me to test functions and explore the API. Not being 
+// React Component that allowed me to test functions and explore the API. Not currently being used
 
 export function renderImageURLs(
   imageData: Record<string, Record<string, string>> | undefined
