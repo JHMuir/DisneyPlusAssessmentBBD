@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react'
 
 const API_URL = "https://cd-static.bamgrid.com/dp-7068675309/home.json"
 
-// Functions that fetch and interface with the API endpoint
+// Functions and hooks that fetch and interface with the API endpoint
 
 export async function fetchAPIData(): Promise<APIResponse> {
     try {
