@@ -18,6 +18,12 @@ export function CardRow({title, items, loading, error, selectedIndex}:CardRowPro
       tile: getContentImageURL(item, ContentFields.IMAGE_TILE, ContentFields.IMAGE_TILE_RATIO),
   }));
 
+  const placeholderCards = Array.from({ length:3 }, (_, index) => ({
+    id: index,
+    title: " ",
+    tile: " ",
+  }))
+
   const handleImgError = (element: React.SyntheticEvent<HTMLImageElement, Event>) => {
       const img = element.currentTarget;
       if(img.src !== PLACEHOLDER_IMAGE) {
@@ -27,30 +33,31 @@ export function CardRow({title, items, loading, error, selectedIndex}:CardRowPro
 
   horizontalScroll(selectedIndex, containerRef, cardRefs);
 
-  if(loading) return <div>Loading Disney+ {title} stuff...</div>;
   if(error) return <div>Error: {error}</div>;
 
-    return (
-        <div className="card-row-container">
-          <h2 className="section-title">{title}</h2>
-          <div className="cards-container" ref={containerRef}>
-            <div className="cards-wrapper">
-              {cards.map((card, index) => (
-                <div key={card.id} ref={el => { cardRefs.current[index] = el;} } className={`card ${selectedIndex === index ? 'selected' : ''}`} tabIndex={-1}>
-                  <div className={`card-image ${selectedIndex === index ? 'selected' : ''}`}>
-                    <div>
-                      <img src={card.tile} alt={card.title} onError={handleImgError}></img>
-                    </div>
-                  </div>
-                  <div className="card-info">
-                    <h3 className="card-title">{card.title}</h3>
-                  </div>
+  const renderCards = loading ? placeholderCards : cards;
+
+  return (
+    <div className="card-row-container">
+      <h2 className="section-title">{loading ? "Loading..." : title}</h2>
+      <div className="cards-container" ref={containerRef}>
+        <div className="cards-wrapper">
+          {renderCards.map((card, index) => (
+            <div key={`${loading ? 'placeholder' : 'card'}-${card.id}`} ref={el => { cardRefs.current[index] = el;} } className={loading ? "placeholder-card" : `card ${selectedIndex === index ? 'selected' : ''}`} tabIndex={-1}>
+              <div className={`card-image ${!loading && selectedIndex === index ? 'selected' : ''}`}>
+                <div>
+                  <img src={card.tile} alt={card.title} loading="lazy" onError={handleImgError}></img>
                 </div>
-              ))}
+              </div>
+              <div className="card-info">
+                <h3 className="card-title">{card.title}</h3>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-      );
+      </div>
+    </div>
+  );
 };
 
 export default CardRow;

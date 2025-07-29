@@ -22,15 +22,6 @@ export function App() {
 
     const {activeRowIndex, selectedCardIndex, showOverlay} = keyboardNavigation(contentRows);
     const activeRow = contentRows[activeRowIndex];
-
-    // Fallback statement in case a row is empty
-    if(!activeRow || activeRow.items.length === 0) {
-        return (
-            <div className="app-container">
-                <div>{activeRow?.title || "Unknown"}</div>
-            </div>
-        )
-    }
     
     return (
         <div className="app-container">

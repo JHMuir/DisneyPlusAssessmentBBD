@@ -35,6 +35,15 @@
     padding: 60px 60px 60px 0px;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0; 
+    }
+    to {
+        opacity: 1; 
+    }
+}
+
 .card {
     flex-shrink: 0;
     width: 400px;
@@ -43,6 +52,7 @@
     transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 1);
     position: relative;
     transform-origin: center;
+    animation: fadeIn 0.5s ease-in-out forwards;
 }
 
 .card:focus {
@@ -55,6 +65,16 @@
     z-index: 10;
     /* border: 10px solid white; */
     
+}
+
+.placeholder-card{
+    flex-shrink: 0;
+    width: 400px;
+    height: 225px;
+    padding: 0px 40px 0px 40px;
+    transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 1);
+    position: relative;
+    transform-origin: center;
 }
 
 .card-image {

@@ -36,15 +36,18 @@ export function getData() {
         try {
           setLoading(true);
           const result = await fetchAPIData();
-          setData(result);
+          // only here to view the loading state placeholder cards 
+          setTimeout(() => {
+            setData(result);
+            console.log("Sending Data....");
+            setLoading(false);
+          }, 5000);
         } catch(error) {
           setError(error instanceof Error ? error.message : "Error occurred");
-        } finally {
           setLoading(false);
         }
       };
       fetchData();
     }, []);
-    console.log(data);
     return { data, loading, error };
   }
