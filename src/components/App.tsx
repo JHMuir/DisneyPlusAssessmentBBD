@@ -12,12 +12,14 @@ export function App() {
     const {apiData, loading, error} = useAPIData();
     
     // Memoizing our row data to prevent repeated expensive calculations 
-    const allItems = useMemo(() => extractAllContentItems(apiData), [apiData]);
-    const contentRows = useMemo(() => [
-      {title: "Collections", items: allItems.filter(isCollectionContent)},
-      {title: "Movies", items: allItems.filter(isMovieContent)},
-      {title: "Series", items: allItems.filter(isSeriesContent)}
-    ], [allItems]);
+    const contentRows = useMemo(() => {
+      const allItems = extractAllContentItems(apiData);
+      return [
+        {title: "Collections", items: allItems.filter(isCollectionContent)},
+        {title: "Movies", items: allItems.filter(isMovieContent)},
+        {title: "Series", items: allItems.filter(isSeriesContent)}
+      ]
+    }, [apiData])
 
     const {activeRowIndex, selectedCardIndex, showOverlay} = useKeyboardNavigation(contentRows);
     const activeRow = contentRows[activeRowIndex];
