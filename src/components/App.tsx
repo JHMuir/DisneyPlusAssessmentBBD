@@ -1,19 +1,18 @@
 import { useMemo } from "react";
-import { getData } from "../api/api.ts";
 import { extractAllContentItems, isSeriesContent, isCollectionContent, isMovieContent } from "../types/helpers.ts";
 import CardRow from "./CardRow";
 import CardOverlay from "./CardOverlay";
+import { getAPIData } from "../hooks/getAPIData.ts";
 import { keyboardNavigation } from "../hooks/keyboardNavigation.ts";
-
 import '../styles/App.css'
 
 // Parent Component that controls row navigation, user input, and component mounting 
 
 export function App() {
-    const {data, loading, error} = getData();
+    const {apiData, loading, error} = getAPIData();
     
     // Memoizing our row data to prevent repeated expensive calculations 
-    const allItems = useMemo(() => extractAllContentItems(data), [data]);
+    const allItems = useMemo(() => extractAllContentItems(apiData), [apiData]);
     const contentRows = useMemo(() => [
       {title: "Collections", items: allItems.filter(isCollectionContent)},
       {title: "Movies", items: allItems.filter(isMovieContent)},
