@@ -13,25 +13,25 @@ export function App() {
     const {data, loading, error} = getData();
     
     // Memoizing our row data to prevent repeated expensive calculations 
-    const allItems = extractAllContentItems(data);
+    const allItems = useMemo(() => extractAllContentItems(data), [data]);
     const contentRows = useMemo(() => [
-        {title: "Collections", items: allItems.filter(isCollectionContent), loading: loading, error: error},
-        {title: "Movies", items: allItems.filter(isMovieContent), loading: loading, error: error},
-        {title: "Series", items: allItems.filter(isSeriesContent), loading: loading, error: error}
+      {title: "Collections", items: allItems.filter(isCollectionContent), loading: loading, error: error},
+      {title: "Movies", items: allItems.filter(isMovieContent), loading: loading, error: error},
+      {title: "Series", items: allItems.filter(isSeriesContent), loading: loading, error: error}
     ], [allItems]);
 
     const {activeRowIndex, selectedCardIndex, showOverlay} = keyboardNavigation(contentRows);
     const activeRow = contentRows[activeRowIndex];
     
     return (
-        <div className="app-container">
-          <div className={`row-container ${showOverlay ? 'blurred' : ''}`}>
-            <CardRow key={activeRow.title} title={activeRow.title} items={activeRow.items} loading={activeRow.loading} error={activeRow.error} selectedIndex={selectedCardIndex}/>
-          </div>
-          {showOverlay && activeRow.items[selectedCardIndex] && (
-              <CardOverlay item={activeRow.items[selectedCardIndex]} />
-          )}
+      <div className="app-container">
+        <div className={`row-container ${showOverlay ? 'blurred' : ''}`}>
+          <CardRow key={activeRow.title} title={activeRow.title} items={activeRow.items} loading={activeRow.loading} error={activeRow.error} selectedIndex={selectedCardIndex}/>
         </div>
+        {showOverlay && activeRow.items[selectedCardIndex] && (
+            <CardOverlay item={activeRow.items[selectedCardIndex]} />
+        )}
+      </div>
     )
   }
 

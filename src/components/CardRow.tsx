@@ -5,7 +5,7 @@ import { horizontalScroll } from '../hooks/horizontalScroll.ts';
 import '../styles/CardRow.css'
 
 const PLACEHOLDER_IMAGE = "/disney-plus-placeholder.png";
-
+const PLACEHOLDER_CARD_AMOUNT = 3;
 // React Component that handles the rendering of a given row 
 
 export function CardRow({title, items, loading, error, selectedIndex}:CardRowProps) {
@@ -13,22 +13,22 @@ export function CardRow({title, items, loading, error, selectedIndex}:CardRowPro
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const cards = items.map(item => ({
-      id: getContentIDs(item),
-      title: getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE),
-      tile: getContentImageURL(item, ContentFields.IMAGE_TILE, ContentFields.IMAGE_TILE_RATIO),
+    id: `card-${getContentIDs(item)}`,
+    title: getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE),
+    tile: getContentImageURL(item, ContentFields.IMAGE_TILE, ContentFields.IMAGE_TILE_RATIO),
   }));
 
-  const placeholderCards = Array.from({ length:3 }, (_, index) => ({
-    id: index,
+  const placeholderCards = Array.from({ length: PLACEHOLDER_CARD_AMOUNT }, (_, index) => ({
+    id: `placeholder-${index}`,
     title: " ",
     tile: " ",
   }))
 
   const handleImgError = (element: React.SyntheticEvent<HTMLImageElement, Event>) => {
-      const img = element.currentTarget;
-      if(img.src !== PLACEHOLDER_IMAGE) {
-        img.src = PLACEHOLDER_IMAGE;
-      }
+    const img = element.currentTarget;
+    if(img.src !== PLACEHOLDER_IMAGE) {
+      img.src = PLACEHOLDER_IMAGE;
+    }
   };
 
   horizontalScroll(selectedIndex, containerRef, cardRefs);
@@ -43,7 +43,7 @@ export function CardRow({title, items, loading, error, selectedIndex}:CardRowPro
       <div className="cards-container" ref={containerRef}>
         <div className="cards-wrapper">
           {renderCards.map((card, index) => (
-            <div key={`${loading ? 'placeholder' : 'card'}-${card.id}`} ref={el => { cardRefs.current[index] = el;} } className={loading ? "placeholder-card" : `card ${selectedIndex === index ? 'selected' : ''}`} tabIndex={-1}>
+            <div key={card.id} ref={el => { cardRefs.current[index] = el;} } className={loading ? "placeholder-card" : `card ${selectedIndex === index ? 'selected' : ''}`} tabIndex={-1}>
               <div className={`card-image ${!loading && selectedIndex === index ? 'selected' : ''}`}>
                 <div>
                   <img src={card.tile} alt={card.title} loading="lazy" onError={handleImgError}></img>

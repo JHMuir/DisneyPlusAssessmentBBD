@@ -9,8 +9,8 @@
     justify-content: flex-start;
     overflow: hidden;
     z-index: 1000;
-    animation: fadeSlide 0.5s cubic-bezier(0.25, 0.5, 0.5, 1) both;
-    transition: all 0.5s cubic-bezier(0.25, 0.5, 0.5, 1);
+    animation: fadeSlide var(--easing-standard) both;
+    transition: all 0.5s var(--easing);
     padding: 2rem;
     box-sizing: border-box;
 }

@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 
+const DEBOUNCE_MS = 50;
+
 export function keyboardNavigation(contentRows: any[]) {
     const [activeRowIndex, setActiveRowIndex] = useState(0);
     const [selectedCardIndex, setSelectedCardIndex] = useState(0);
@@ -14,32 +16,36 @@ export function keyboardNavigation(contentRows: any[]) {
             if (isProcessing) return;
             isProcessing = true;
 
-            setTimeout(() => {isProcessing = false;}, 50);
+            setTimeout(() => {isProcessing = false;}, DEBOUNCE_MS);
 
             const activeRow = contentRows[activeRowIndex];
             const maxCards = activeRow ? activeRow.items.length - 1 : 0;
             switch(event.key){
-                case "ArrowUp" || "w":
+                case "ArrowUp":
+                case "w":
                     event.preventDefault();
                     if(!showOverlay) {
                         setActiveRowIndex(prev => Math.max(0, prev - 1));
                         setSelectedCardIndex(0);
                     }
                     break;
-                case "ArrowDown" || "s":
+                case "ArrowDown":
+                case "s":
                     event.preventDefault();
                     if(!showOverlay) {
                         setActiveRowIndex(prev => Math.min(contentRows.length - 1, prev + 1));
                         setSelectedCardIndex(0);
                     }
                     break;
-                case "ArrowLeft" || "a":
+                case "ArrowLeft":
+                case "a":
                     event.preventDefault();
                     if(!showOverlay) {
                         setSelectedCardIndex(prev => Math.max(0, prev - 1));
                     }
                     break;
-                case "ArrowRight" || "d":
+                case "ArrowRight": 
+                case "d":
                     event.preventDefault();
                     if(!showOverlay) {
                         setSelectedCardIndex(prev => Math.min(maxCards, prev + 1));
@@ -63,6 +69,6 @@ export function keyboardNavigation(contentRows: any[]) {
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    },[activeRowIndex, selectedCardIndex, showOverlay, contentRows]);
+    },[activeRowIndex, selectedCardIndex, showOverlay, contentRows, contentRows.length]);
     return {activeRowIndex, selectedCardIndex, showOverlay}
 }
