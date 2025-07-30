@@ -1,6 +1,6 @@
 import {useEffect, type RefObject} from 'react';
 
-export function horizontalScroll(selectedIndex: number, containerRef: RefObject<HTMLDivElement | null>, cardRefs: RefObject<(HTMLDivElement | null)[]>){
+export function useHorizontalScroll(selectedIndex: number, containerRef: RefObject<HTMLDivElement | null>, cardRefs: RefObject<(HTMLDivElement | null)[]>){
     useEffect(() => {
         if (selectedIndex < 0 || !cardRefs.current[selectedIndex] || !containerRef.current) return;
         

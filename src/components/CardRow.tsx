@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { getContentText, getContentImageURL, getContentIDs } from '../types/helpers.ts';
 import { type CardRowProps, ContentFields } from '../types/types.ts';
-import { horizontalScroll } from '../hooks/horizontalScroll.ts';
+import { useHorizontalScroll } from '../hooks/useHorizontalScroll.ts';
 import '../styles/CardRow.css'
 
 const PLACEHOLDER_IMAGE = "/disney-plus-placeholder.png";
@@ -31,7 +31,7 @@ export function CardRow({title, items, loading, error, selectedIndex}:CardRowPro
     }
   };
 
-  horizontalScroll(selectedIndex, containerRef, cardRefs);
+  useHorizontalScroll(selectedIndex, containerRef, cardRefs);
 
   if(error) return <div>Error: {error}</div>;
 

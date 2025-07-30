@@ -2,14 +2,14 @@ import { useMemo } from "react";
 import { extractAllContentItems, isSeriesContent, isCollectionContent, isMovieContent } from "../types/helpers.ts";
 import CardRow from "./CardRow";
 import CardOverlay from "./CardOverlay";
-import { getAPIData } from "../hooks/getAPIData.ts";
-import { keyboardNavigation } from "../hooks/keyboardNavigation.ts";
+import { useAPIData } from "../hooks/useAPIData.ts";
+import { useKeyboardNavigation } from "../hooks/useKeyboardNavigation.ts";
 import '../styles/App.css'
 
 // Parent Component that controls row navigation, user input, and component mounting 
 
 export function App() {
-    const {apiData, loading, error} = getAPIData();
+    const {apiData, loading, error} = useAPIData();
     
     // Memoizing our row data to prevent repeated expensive calculations 
     const allItems = useMemo(() => extractAllContentItems(apiData), [apiData]);
@@ -19,7 +19,7 @@ export function App() {
       {title: "Series", items: allItems.filter(isSeriesContent)}
     ], [allItems]);
 
-    const {activeRowIndex, selectedCardIndex, showOverlay} = keyboardNavigation(contentRows);
+    const {activeRowIndex, selectedCardIndex, showOverlay} = useKeyboardNavigation(contentRows);
     const activeRow = contentRows[activeRowIndex];
     
     return (

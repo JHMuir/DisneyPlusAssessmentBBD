@@ -1,6 +1,6 @@
 import { useEffect, type RefObject } from "react";
 
-export function videoAutoplay(videoURL: string | undefined, videoRef: RefObject<HTMLVideoElement | null>) {
+export function useVideoAutoplay(videoURL: string | undefined, videoRef: RefObject<HTMLVideoElement | null>) {
     useEffect(() => {
         if (!videoURL || !videoRef.current) return;
         

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 const DEBOUNCE_MS = 50;
 
-export function keyboardNavigation(contentRows: any[]) {
+export function useKeyboardNavigation(contentRows: any[]) {
     const [activeRowIndex, setActiveRowIndex] = useState(0);
     const [selectedCardIndex, setSelectedCardIndex] = useState(0);
     const [showOverlay, setShowOverlay] = useState(false);

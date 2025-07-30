@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react'
 
 const API_URL = "https://cd-static.bamgrid.com/dp-7068675309/home.json"
 
-export function getAPIData() {
+export function useAPIData() {
     const [apiData, setAPIData] = useState<APIResponse | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
