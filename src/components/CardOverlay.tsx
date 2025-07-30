@@ -1,6 +1,7 @@
-import { useState, useRef, type JSX, useEffect } from "react";
+import { useState, useRef, type JSX } from "react";
 import { ContentFields, type CardOverlayProps, type ContentMiscData } from "../types/types.ts";
 import { getContentText, getContentImageURL, getContentMiscData, getContentVideoArtURL } from "../types/helpers.ts";
+import { videoAutoplay } from "../hooks/videoAutoplay.ts";
 import '../styles/CardOverlay.css'
 
 // React Component that renders an overlay by stitching together two images alongside some select data from a given item
@@ -66,17 +67,7 @@ export function CardOverlay({item}: CardOverlayProps) {
         }
     };
     
-    // Small React hook that handles video rendering logic
-    useEffect(() => {
-        if(overlayData.video && videoRef.current) {
-            const video = videoRef.current;
-            setTimeout(() => {
-                video.play().catch((error) => {
-                    console.log(`Error: ${error}`);
-                });
-            }, 100);
-        }
-    }, [overlayData.video]);
+    videoAutoplay(overlayData.video, videoRef);
 
     return (
         <div className="overlay-container">
