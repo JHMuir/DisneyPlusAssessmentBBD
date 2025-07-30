@@ -242,13 +242,6 @@ export interface APIResponse{
     };
 }
 
-export type ContentItems = ContentItem[];
-export type SeriesItems = Series[];
-export type MovieItems = Movie[];
-export type CollectionItems = Collection[];
-export type ExtractContentItems<T> = T extends APIResponse 
-    ? T['data']['StandardCollection']['containers'][number]['set']['items'] : never;
-
 export interface CardOverlayProps {
     item: ContentItem;
 }
