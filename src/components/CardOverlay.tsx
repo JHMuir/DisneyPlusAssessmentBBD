@@ -1,6 +1,6 @@
 import { useState, useRef, type JSX } from "react";
 import { ContentFields, type CardOverlayProps, type ContentMiscData } from "../types/types.ts";
-import { getContentText, getContentImageURL, getContentMiscData, getContentVideoArtURL } from "../types/helpers.ts";
+import { getContentText, getContentImageURL, getContentMiscData, getContentVideoArtURL, isCollectionContent } from "../types/helpers.ts";
 import { videoAutoplay } from "../hooks/videoAutoplay.ts";
 import '../styles/CardOverlay.css'
 
@@ -11,6 +11,7 @@ export function CardOverlay({item}: CardOverlayProps) {
     const videoRef = useRef<HTMLVideoElement>(null); 
     const [topImageIndex, setTopImage] = useState(0);
     const [bottomImageIndex, setBottomImage] = useState(0);
+    const [allBottomImagesUsed, setAllBottomImagesUsed] = useState(false);
 
     const overlayData = {
         title: getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE),
@@ -20,6 +21,7 @@ export function CardOverlay({item}: CardOverlayProps) {
         logoLayer: getContentImageURL(item, ContentFields.IMAGE_LOGO_LAYER, ContentFields.IMAGE_LOGO_LAYER_RATIO),
         video: getContentVideoArtURL(item),
         miscData: getContentMiscData(item),
+        isCollection: isCollectionContent(item),
     };
 
     // Small regex function that returns a Title Case string from a camelCase string
@@ -64,6 +66,8 @@ export function CardOverlay({item}: CardOverlayProps) {
     const handleBottomMissingImg = () => {
         if(bottomImageIndex < bottomImagesArray.length - 1) {
             setBottomImage(prev => prev + 1);
+        } else {
+            setAllBottomImagesUsed(true);
         }
     };
     
@@ -75,12 +79,24 @@ export function CardOverlay({item}: CardOverlayProps) {
                 <video ref={videoRef} src={overlayData.video} className="overlay-video-top" loop muted playsInline preload="metadata"style={{borderTopRightRadius: "12px", borderTopLeftRadius: "12px"}} />
             )}
             {!overlayData.video && (
-                <img src={currentTopImage} onError={handleTopMissingImg} style={{borderTopRightRadius: "12px", borderTopLeftRadius: "12px"}}/>
+                <img src={currentTopImage} alt={overlayData.title} onError={handleTopMissingImg} style={{borderTopRightRadius: "12px", borderTopLeftRadius: "12px"}}/>
             )}
-            <div className="overlay-container-text">
-                <img src={currentBottomImage} onError={handleBottomMissingImg} style={{borderBottomLeftRadius: "12px",borderBottomRightRadius: "12px", width:"100%", height:"auto"}} alt={overlayData.title}/>
+            <div className="overlay-container-bottom">
+                <div>
+                    {currentBottomImage && !allBottomImagesUsed ? (
+                        <img src={currentBottomImage} alt={overlayData.title} onError={handleBottomMissingImg} style={{borderBottomLeftRadius: "12px", borderBottomRightRadius: "12px", width:"100%", height:"auto"}}/>
+                    ) : (
+                        <div className="overlay-bottom">
+                            <div className="overlay-bottom-title">
+                                {overlayData.title}
+                            </div>
+                        </div>
+                    )}
+                </div>
                 <div className="overlay-text">
-                    {renderMiscData(overlayData.miscData)}
+                    {!overlayData.isCollection ? 
+                        renderMiscData(overlayData.miscData) : 
+                        (<div>This is a {overlayData.title} Collection</div>)}
                 </div>
             </div>
         </div>
