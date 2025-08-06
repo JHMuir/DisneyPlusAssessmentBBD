@@ -1,5 +1,5 @@
 import { useAPIData } from "../hooks/useAPIData.ts";
-import { extractAllContentItems, isSeriesContent, isMovieContent, getContentText, isCollectionContent, getAllContentImageURL } from '../types/helpers.ts';
+import { extractAllContentItems, isSeriesContent, isMovieContent, getContentText, isCollectionContent, getAllContentItemImageURL } from '../types/helpers.ts';
 import { ContentFields } from '../types/types.ts';
 
 // React Component that allowed me to test functions and explore the API. Not currently being used
@@ -49,7 +49,7 @@ export function Test() {
   
   const seriesList = seriesItems.map( item => {
     const title = getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE);
-    const imageData = renderImageURLs(getAllContentImageURL(item));
+    const imageData = renderImageURLs(getAllContentItemImageURL(item));
     return (
       <div>
         <li key={item.contentId}><strong>Series:</strong> {title}</li>
@@ -60,7 +60,7 @@ export function Test() {
 
   const moviesList = movieItems.map(item => {
     const title = getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE);
-    const imageData = renderImageURLs(getAllContentImageURL(item));
+    const imageData = renderImageURLs(getAllContentItemImageURL(item));
     return (
       <div>
         <li key={item.contentId}><strong>Movies:</strong> {title}</li>
@@ -71,7 +71,7 @@ export function Test() {
 
   const collectionsList = collectionItems.map( item => {
     const title = getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE);
-    const imageData = renderImageURLs(getAllContentImageURL(item))
+    const imageData = renderImageURLs(getAllContentItemImageURL(item))
     return (
       <div>
         <li key={item.collectionId}><strong>Collection:</strong> {title}</li>

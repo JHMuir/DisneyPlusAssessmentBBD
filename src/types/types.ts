@@ -204,6 +204,7 @@ export type Movie = MovieContentItem;
 export type Collection = CollectionContentItem;
 export type ContentItem = Series | Movie | Collection;
 
+
 interface SetMeta {
     hits: number;
     offset: number;
@@ -214,9 +215,13 @@ interface CuratedSet {
     contentClass: string;
     items: ContentItem[];
     meta: SetMeta;
+    setId: string;
     text: SimpleTextContent<"set">;
     type: 'CuratedSet';
 }
+
+export type Set = CuratedSet;
+export type Content = ContentItem | Set;
 
 interface ShelfContainer {
     set: CuratedSet;

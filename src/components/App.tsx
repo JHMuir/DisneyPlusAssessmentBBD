@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { extractAllContentItems, isSeriesContent, isCollectionContent, isMovieContent } from "../types/helpers.ts";
+import { extractAllContentItems, isSeriesContent, isCollectionContent, isMovieContent, extractAllSets } from "../types/helpers.ts";
 import CardRow from "./CardRow";
 import { useRowNavigation } from "../hooks/useRowNavigation.ts";
 import { useAPIData } from "../hooks/useAPIData.ts";
@@ -19,6 +19,9 @@ export function App() {
         {title: "Series", items: allItems.filter(isSeriesContent)}
       ]
     }, [apiData])
+
+    const allSets = extractAllSets(apiData);
+    console.log(allSets);
 
     const activeRowIndex = useRowNavigation(contentRows);
     const activeRow = contentRows[activeRowIndex];

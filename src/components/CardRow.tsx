@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { getContentText, getContentImageURL, getContentIDs } from '../types/helpers.ts';
+import { getContentText, getContentItemImageURL, getContentIDs } from '../types/helpers.ts';
 import { type CardRowProps, ContentFields } from '../types/types.ts';
 import { useHorizontalScroll } from '../hooks/useHorizontalScroll.ts';
 import '../styles/CardRow.css'
@@ -17,7 +17,7 @@ export function CardRow({title, items, loading, error}:CardRowProps) {
   const cards = items.map(item => ({
     id: `card-${getContentIDs(item)}`,
     title: getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE),
-    tile: getContentImageURL(item, ContentFields.IMAGE_TILE, ContentFields.IMAGE_TILE_RATIO),
+    tile: getContentItemImageURL(item, ContentFields.IMAGE_TILE, ContentFields.IMAGE_TILE_RATIO),
   }));
 
   const placeholderCards = Array.from({ length: PLACEHOLDER_CARD_AMOUNT }, (_, index) => ({
