@@ -1,6 +1,6 @@
 import { useState, useRef, type JSX } from "react";
 import { ContentFields, type CardOverlayProps, type ContentMiscData } from "../types/types.ts"
-import { getContentText, getContentImageURL, getContentMiscData, getContentVideoArtURL } from "../types/helpers.ts";
+import { getContentText, getContentItemImageURL, getContentItemMiscData, getContentVideoArtURL, isCollectionContent } from "../types/helpers.ts";
 import { useVideoAutoplay } from "../hooks/useVideoAutoplay.ts";
 import '../styles/CardOverlay.css'
 
@@ -15,12 +15,12 @@ export function CardOverlay({item}: CardOverlayProps) {
 
     const overlayData = {
         title: getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE),
-        heroTile: getContentImageURL(item, ContentFields.IMAGE_HERO_TILE, ContentFields.IMAGE_HERO_TILE_RATIO),
-        heroCollectionTile: getContentImageURL(item, ContentFields.IMAGE_HERO_COLLECTION, ContentFields.IMAGE_HERO_COLLECTION_RATIO),
-        titleTreatmentLayer: getContentImageURL(item, ContentFields.IMAGE_TITLE_TREATMENT_LAYER, ContentFields.IMAGE_TITLE_TREATMENT_LAYER_RATIO),
-        logoLayer: getContentImageURL(item, ContentFields.IMAGE_LOGO_LAYER, ContentFields.IMAGE_LOGO_LAYER_RATIO),
+        heroTile: getContentItemImageURL(item, ContentFields.IMAGE_HERO_TILE, ContentFields.IMAGE_HERO_TILE_RATIO),
+        heroCollectionTile: getContentItemImageURL(item, ContentFields.IMAGE_HERO_COLLECTION, ContentFields.IMAGE_HERO_COLLECTION_RATIO),
+        titleTreatmentLayer: getContentItemImageURL(item, ContentFields.IMAGE_TITLE_TREATMENT_LAYER, ContentFields.IMAGE_TITLE_TREATMENT_LAYER_RATIO),
+        logoLayer: getContentItemImageURL(item, ContentFields.IMAGE_LOGO_LAYER, ContentFields.IMAGE_LOGO_LAYER_RATIO),
         video: getContentVideoArtURL(item),
-        miscData: getContentMiscData(item),
+        miscData: getContentItemMiscData(item),
         isCollection: isCollectionContent(item),
     };
 

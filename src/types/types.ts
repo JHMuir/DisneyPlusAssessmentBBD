@@ -204,6 +204,7 @@ export type Movie = MovieContentItem;
 export type Collection = CollectionContentItem;
 export type ContentItem = Series | Movie | Collection;
 
+
 interface SetMeta {
     hits: number;
     offset: number;
@@ -214,9 +215,13 @@ interface CuratedSet {
     contentClass: string;
     items: ContentItem[];
     meta: SetMeta;
+    setId: string;
     text: SimpleTextContent<"set">;
     type: 'CuratedSet';
 }
+
+export type Set = CuratedSet;
+export type Content = ContentItem | Set;
 
 interface ShelfContainer {
     set: CuratedSet;
@@ -246,11 +251,10 @@ export interface CardOverlayProps {
     item: ContentItem;
 }
 export interface CardRowProps {
-    title: string;
+    title: string | undefined;
     items: ContentItem[];
     loading: boolean;
     error: string | null;
-    selectedIndex: number;
 }
 
 export interface CardNavigation {
@@ -263,6 +267,19 @@ export interface ContentMiscData {
     rating: string;
     releaseDate: string | null;
 }
+
+export interface ContentRow {
+    title: string;
+    items: ContentItem[];
+}
+export type ContentRows = ContentRow[]
+
+export interface Card {
+    id: string;
+    title: string | undefined;
+    tile: string | undefined;
+}
+export type Cards = Card[];
 
 export enum ContentFields {
     TEXT_FULL = "full",

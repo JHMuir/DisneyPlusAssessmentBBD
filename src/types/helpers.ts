@@ -1,4 +1,4 @@
-import type { APIResponse, ContentItem, Series, Movie, Collection, ImageCollection, SimpleTextContent, TextContent, Default, ContentMiscData } from "./types.ts";
+import type { APIResponse, ContentItem, Content, Series, Movie, Collection, Set, ImageCollection, SimpleTextContent, TextContent, Default, ContentMiscData } from "./types.ts";
 
 // Utility functions that allow easier interfacing with our types
 
@@ -11,26 +11,41 @@ export function extractAllContentItems(
     );
 }
 
+export function extractAllSets(
+    response: APIResponse | null
+): Set[] {
+    if(!response) return [];
+    return response.data.StandardCollection.containers.flatMap(
+        container => container.set
+    );
+}
+
 export function isSeriesContent(
-    item: ContentItem
+    item: Content
 ): item is Series {
-    return item.type === "DmcSeries";
+    return item?.type === "DmcSeries";
 }
 
 export function isMovieContent(
-    item: ContentItem
+    item: Content
 ): item is Movie {
-    return item.type === "DmcVideo"
+    return item?.type === "DmcVideo"
 }
 
 export function isCollectionContent(
-    item: ContentItem
+    item: Content
 ): item is Collection {
-    return item.type === "StandardCollection";
+    return item?.type === "StandardCollection";
+}
+
+export function isSetContent (
+    item: Content
+): item is Set {
+    return item?.type === "CuratedSet"
 }
 
 export function getContentText(
-    item: ContentItem, 
+    item: Content, 
     textType: "full" | "slug",
     contentType: keyof Default
 ): string | undefined {
@@ -42,6 +57,9 @@ export function getContentText(
     }
     else if (isCollectionContent(item)){
         return getSimpleTextContent(item.text, "collection", contentType); 
+    }
+    else if (isSetContent(item)){
+        return getSimpleTextContent(item.text, "set", contentType);
     }
     else{
         return undefined;
@@ -65,8 +83,8 @@ function getSimpleTextContent<T extends string>(
     return textContent?.title?.full?.[entityType]?.default?.[contentType];
 }
 
-export function getContentImageURL(
-    item: ContentItem,
+export function getContentItemImageURL(
+    item: Content,
     imageType: string,
     aspectRatio: string
 ): string | undefined {
@@ -93,7 +111,7 @@ function getImageURL(
     return image[imageType]?.[aspectRatio]?.[entityType]?.default?.url;
 }
 
-export function getAllContentImageURL(
+export function getAllContentItemImageURL(
     item: ContentItem
 ): Record<string, Record<string, string>> | undefined {
     if (isSeriesContent(item)) {
@@ -129,7 +147,7 @@ function getAllImageURLs(
 }
 
 export function getContentIDs(
-    item: ContentItem, 
+    item: Content, 
 ): string | undefined {
    if (isSeriesContent(item) || isMovieContent(item)) {
         return item.contentId;
@@ -137,10 +155,13 @@ export function getContentIDs(
    else if (isCollectionContent(item)) {
         return item.collectionId;
    }
+   else if (isSetContent(item)) {
+    return item.setId;
+   }
    else return undefined;
 }
 
-export function getContentMiscData(
+export function getContentItemMiscData(
     item: ContentItem,
 ): ContentMiscData | undefined {
     if(isSeriesContent(item) || isMovieContent(item)) {

@@ -1,9 +1,13 @@
-
 .card-row-container {
     background: #040714;
     font-family: 'Segoe UI', system-ui, sans-serif;
     padding: 10px 0 30px;
     animation: fadeSlide var(--easing-standard) both;
+}
+
+.card-row-container.blurred {
+    filter: blur(8px);
+    transition: filter 0.5s ease-in-out;
 }
 
 .section-title {

@@ -27,5 +27,4 @@
 .row-container.blurred {
     filter: blur(8px);
     transition: filter 0.5s ease-in-out;
-
 }
