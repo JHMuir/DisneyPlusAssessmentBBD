@@ -1,35 +1,28 @@
 import { useMemo } from "react";
-import { extractAllContentItems, isSeriesContent, isCollectionContent, isMovieContent, extractAllSets } from "../types/helpers.ts";
+import { extractAllSets, getContentText } from "../types/helpers.ts";
 import CardRow from "./CardRow";
 import { useRowNavigation } from "../hooks/useRowNavigation.ts";
 import { useAPIData } from "../hooks/useAPIData.ts";
 import '../styles/App.css'
+import { ContentFields } from "../types/types.ts";
 
 // Parent Component that controls row navigation, user input, and component mounting 
 
 export function App() {
     const {apiData, loading, error} = useAPIData();
-    
-    // Memoizing our row data to prevent repeated expensive calculations 
-    const contentRows = useMemo(() => {
-      const allItems = extractAllContentItems(apiData);
-      return [
-        {title: "Collections", items: allItems.filter(isCollectionContent)},
-        {title: "Movies", items: allItems.filter(isMovieContent)},
-        {title: "Series", items: allItems.filter(isSeriesContent)}
-      ]
+
+    const setRows = useMemo(() => {
+      const sets = extractAllSets(apiData);
+      return sets;
     }, [apiData])
 
-    const allSets = extractAllSets(apiData);
-    console.log(allSets);
-
-    const activeRowIndex = useRowNavigation(contentRows);
-    const activeRow = contentRows[activeRowIndex];
+    const activeRowIndex = useRowNavigation(setRows);
+    const activeRow = setRows[activeRowIndex];
 
     return (
       <div className="app-container">
         <div className="row-container">
-          <CardRow key={activeRow.title} title={activeRow.title} items={activeRow.items} loading={loading} error={error} />
+          <CardRow key={activeRow?.setId} title={getContentText(activeRow, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE)} items={activeRow?.items} loading={loading} error={error} />
         </div>
       </div>
     )

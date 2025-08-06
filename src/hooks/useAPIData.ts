@@ -22,14 +22,10 @@ export function useAPIData() {
                 if(!apiJson.data){
                     throw new Error(`APIResponse Structure Error`);
                 }
-                // only here to view the loading state placeholder cards 
-                setTimeout(() => {
-                    if(!abortController.signal.aborted) {
-                      setAPIData(apiJson);
-                      console.log("Sending Data....");
-                      setLoading(false);
-                    }
-                }, 5000);
+                if(!abortController.signal.aborted) {
+                    setAPIData(apiJson);
+                    setLoading(false);
+                }
             } catch(error) {
                 if (!abortController.signal.aborted) {
                     setError(error instanceof Error ? error.message : "Error occurred");

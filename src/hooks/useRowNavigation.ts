@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import type { ContentRows } from "../types/types";
+import type {Set} from "../types/types";
 
 const DEBOUNCE_MS = 50;
 
-export function useRowNavigation(rows: ContentRows) {
+export function useRowNavigation(rows: Set[]) {
     const [activeRowIndex, setActiveRowIndex] = useState(0);
 
     useEffect(() => {
@@ -31,6 +31,6 @@ export function useRowNavigation(rows: ContentRows) {
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [activeRowIndex]);
+    }, [activeRowIndex, rows]);
     return activeRowIndex
 }

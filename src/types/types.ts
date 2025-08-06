@@ -251,7 +251,7 @@ export interface CardOverlayProps {
     item: ContentItem;
 }
 export interface CardRowProps {
-    title: string;
+    title: string | undefined;
     items: ContentItem[];
     loading: boolean;
     error: string | null;

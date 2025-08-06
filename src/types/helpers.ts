@@ -23,25 +23,25 @@ export function extractAllSets(
 export function isSeriesContent(
     item: Content
 ): item is Series {
-    return item.type === "DmcSeries";
+    return item?.type === "DmcSeries";
 }
 
 export function isMovieContent(
     item: Content
 ): item is Movie {
-    return item.type === "DmcVideo"
+    return item?.type === "DmcVideo"
 }
 
 export function isCollectionContent(
     item: Content
 ): item is Collection {
-    return item.type === "StandardCollection";
+    return item?.type === "StandardCollection";
 }
 
 export function isSetContent (
     item: Content
 ): item is Set {
-    return item.type === "CuratedSet"
+    return item?.type === "CuratedSet"
 }
 
 export function getContentText(

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import { getContentText, getContentItemImageURL, getContentIDs } from '../types/helpers.ts';
 import { type CardRowProps, ContentFields } from '../types/types.ts';
 import { useHorizontalScroll } from '../hooks/useHorizontalScroll.ts';
@@ -8,17 +8,21 @@ import CardOverlay from './CardOverlay.tsx';
 
 const PLACEHOLDER_IMAGE = "/disney-plus-placeholder.png";
 const PLACEHOLDER_CARD_AMOUNT = 3;
+
 // React Component that handles the rendering of a given row 
 
 export function CardRow({title, items, loading, error}:CardRowProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const cards = items.map(item => ({
-    id: `card-${getContentIDs(item)}`,
-    title: getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE),
-    tile: getContentItemImageURL(item, ContentFields.IMAGE_TILE, ContentFields.IMAGE_TILE_RATIO),
-  }));
+  const cards = useMemo(() => {
+    if(loading || !items) return [];
+    return items.map(item => ({
+      id: `card-${getContentIDs(item)}`,
+      title: getContentText(item, ContentFields.TEXT_FULL, ContentFields.TEXT_TITLE),
+      tile: getContentItemImageURL(item, ContentFields.IMAGE_TILE, ContentFields.IMAGE_TILE_RATIO),
+    }));
+  }, [items]);
 
   const placeholderCards = Array.from({ length: PLACEHOLDER_CARD_AMOUNT }, (_, index) => ({
     id: `placeholder-${index}`,
