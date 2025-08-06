@@ -11,10 +11,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --easing: cubic-bezier(0.25, 0.5, 0.5, 1);
+  --easing-fast: 0.3s var(--easing);
+  --easing-standard: 0.5s var(--easing);
+  --easing-slow: 0.7s var(--easing);
 }
 
 .disney-plus {
-  animation: fadeSlide 0.5s cubic-bezier(0.25, 0.5, 0.5, 1) both;
+  animation: fadeSlide var(--easing-standard) both;
   text-align: right;
 }
 

@@ -1,4 +1,4 @@
-import { getData } from '../api/api.ts'
+import { useAPIData } from "../hooks/useAPIData.ts";
 import { extractAllContentItems, isSeriesContent, isMovieContent, getContentText, isCollectionContent, getAllContentImageURL } from '../types/helpers.ts';
 import { ContentFields } from '../types/types.ts';
 
@@ -28,18 +28,18 @@ export function renderImageURLs(
 }
 
 export function Test() {
-  const {data, loading, error } = getData()
+  const {apiData, loading, error } = useAPIData()
   if (loading) {
     return <div>Loading... {loading}</div>;
   }
   if (error) {
     return <div>Error: {error}</div>;
   }
-  if (!data) {
+  if (!apiData) {
     return <div>No data?</div>;
   }
 
-  const allItems = extractAllContentItems(data);
+  const allItems = extractAllContentItems(apiData);
   const seriesItems = allItems.filter(isSeriesContent);
   const movieItems = allItems.filter(isMovieContent);
   const collectionItems = allItems.filter(isCollectionContent);
