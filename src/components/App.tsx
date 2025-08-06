@@ -1,9 +1,8 @@
 import { useMemo } from "react";
 import { extractAllContentItems, isSeriesContent, isCollectionContent, isMovieContent } from "../types/helpers.ts";
 import CardRow from "./CardRow";
-import CardOverlay from "./CardOverlay";
+import { useRowNavigation } from "../hooks/useRowNavigation.ts";
 import { useAPIData } from "../hooks/useAPIData.ts";
-import { useKeyboardNavigation } from "../hooks/useKeyboardNavigation.ts";
 import '../styles/App.css'
 
 // Parent Component that controls row navigation, user input, and component mounting 
@@ -21,17 +20,14 @@ export function App() {
       ]
     }, [apiData])
 
-    const {activeRowIndex, selectedCardIndex, showOverlay} = useKeyboardNavigation(contentRows);
+    const activeRowIndex = useRowNavigation(contentRows);
     const activeRow = contentRows[activeRowIndex];
-    
+
     return (
       <div className="app-container">
-        <div className={`row-container ${showOverlay ? 'blurred' : ''}`}>
-          <CardRow key={activeRow.title} title={activeRow.title} items={activeRow.items} loading={loading} error={error} selectedIndex={selectedCardIndex}/>
+        <div className="row-container">
+          <CardRow key={activeRow.title} title={activeRow.title} items={activeRow.items} loading={loading} error={error} />
         </div>
-        {showOverlay && activeRow.items[selectedCardIndex] && (
-          <CardOverlay item={activeRow.items[selectedCardIndex]} />
-        )}
       </div>
     )
   }

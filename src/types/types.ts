@@ -250,7 +250,6 @@ export interface CardRowProps {
     items: ContentItem[];
     loading: boolean;
     error: string | null;
-    selectedIndex: number;
 }
 
 export interface CardNavigation {
@@ -263,6 +262,19 @@ export interface ContentMiscData {
     rating: string;
     releaseDate: string | null;
 }
+
+export interface ContentRow {
+    title: string;
+    items: ContentItem[];
+}
+export type ContentRows = ContentRow[]
+
+export interface Card {
+    id: string;
+    title: string | undefined;
+    tile: string | undefined;
+}
+export type Cards = Card[];
 
 export enum ContentFields {
     TEXT_FULL = "full",

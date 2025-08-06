@@ -1,10 +1,10 @@
 import {useEffect, type RefObject} from 'react';
 
-export function useHorizontalScroll(selectedIndex: number, containerRef: RefObject<HTMLDivElement | null>, cardRefs: RefObject<(HTMLDivElement | null)[]>){
+export function useHorizontalScroll(selectedCardIndex: number, containerRef: RefObject<HTMLDivElement | null>, cardRefs: RefObject<(HTMLDivElement | null)[]>){
     useEffect(() => {
-        if (selectedIndex < 0 || !cardRefs.current[selectedIndex] || !containerRef.current) return;
+        if (selectedCardIndex < 0 || !cardRefs.current[selectedCardIndex] || !containerRef.current) return;
         
-        const selectedCard = cardRefs.current[selectedIndex];
+        const selectedCard = cardRefs.current[selectedCardIndex];
         const container = containerRef.current;
 
         if (!selectedCard || !container) return;
@@ -22,6 +22,6 @@ export function useHorizontalScroll(selectedIndex: number, containerRef: RefObje
                 behavior: "smooth"
             });
         }
-    }, [selectedIndex, containerRef, cardRefs]);
+    }, [selectedCardIndex, containerRef, cardRefs]);
 }
 

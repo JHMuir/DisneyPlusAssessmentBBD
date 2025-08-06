@@ -3,12 +3,14 @@ import { getContentText, getContentImageURL, getContentIDs } from '../types/help
 import { type CardRowProps, ContentFields } from '../types/types.ts';
 import { useHorizontalScroll } from '../hooks/useHorizontalScroll.ts';
 import '../styles/CardRow.css'
+import { useCardNavigation } from '../hooks/useCardNavigation.ts';
+import CardOverlay from './CardOverlay.tsx';
 
 const PLACEHOLDER_IMAGE = "/disney-plus-placeholder.png";
 const PLACEHOLDER_CARD_AMOUNT = 3;
 // React Component that handles the rendering of a given row 
 
-export function CardRow({title, items, loading, error, selectedIndex}:CardRowProps) {
+export function CardRow({title, items, loading, error}:CardRowProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -31,31 +33,37 @@ export function CardRow({title, items, loading, error, selectedIndex}:CardRowPro
     }
   };
 
-  useHorizontalScroll(selectedIndex, containerRef, cardRefs);
+  const {selectedCardIndex, showOverlay} = useCardNavigation(cards);
+  useHorizontalScroll(selectedCardIndex, containerRef, cardRefs);
 
   if(error) return <div>Error: {error}</div>;
 
   const renderCards = loading ? placeholderCards : cards;
 
   return (
-    <div className="card-row-container">
-      <h2 className="section-title">{loading ? "Loading..." : title}</h2>
-      <div className="cards-container" ref={containerRef}>
-        <div className="cards-wrapper">
-          {renderCards.map((card, index) => (
-            <div key={card.id} ref={el => { cardRefs.current[index] = el;} } className={loading ? "placeholder-card" : `card ${selectedIndex === index ? 'selected' : ''}`} tabIndex={-1}>
-              <div className={`card-image ${!loading && selectedIndex === index ? 'selected' : ''}`}>
-                <div>
-                  <img src={card.tile} alt={card.title} loading="lazy" onError={handleImgError}></img>
+    <div>
+      <div className={`card-row-container ${showOverlay ? "blurred" : ""}`}>
+        <h2 className="section-title">{loading ? "Loading..." : title}</h2>
+        <div className="cards-container" ref={containerRef}>
+          <div className="cards-wrapper">
+            {renderCards.map((card, index) => (
+              <div key={card.id} ref={el => { cardRefs.current[index] = el;} } className={loading ? "placeholder-card" : `card ${selectedCardIndex === index ? 'selected' : ''}`} tabIndex={-1}>
+                <div className={`card-image ${!loading && selectedCardIndex === index ? 'selected' : ''}`}>
+                  <div>
+                    <img src={card.tile} alt={card.title} loading="lazy" onError={handleImgError}></img>
+                  </div>
+                </div>
+                <div className="card-info">
+                  <h3 className="card-title">{card.title}</h3>
                 </div>
               </div>
-              <div className="card-info">
-                <h3 className="card-title">{card.title}</h3>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+      {showOverlay && !loading && items[selectedCardIndex] && (
+          <CardOverlay item={items[selectedCardIndex]}/>
+      )}
     </div>
   );
 };

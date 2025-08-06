@@ -1,6 +1,6 @@
 import { useState, useRef, type JSX } from "react";
 import { ContentFields, type CardOverlayProps, type ContentMiscData } from "../types/types.ts"
-import { getContentText, getContentImageURL, getContentMiscData, getContentVideoArtURL } from "../types/helpers.ts";
+import { getContentText, getContentImageURL, getContentMiscData, getContentVideoArtURL, isCollectionContent } from "../types/helpers.ts";
 import { useVideoAutoplay } from "../hooks/useVideoAutoplay.ts";
 import '../styles/CardOverlay.css'
 
